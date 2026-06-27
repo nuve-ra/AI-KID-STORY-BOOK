@@ -12,7 +12,7 @@ import AgeGroup from './_components/AgeGroup';
 import ImageStyle from './_components/ImageStyle';
 import CustomLoader from './_components/CustomLoader';
 
-import { chatSession } from '@/config/Geminiai';
+//import { chatSession } from '@/config/Geminiai';
 import { saveStoryToDB } from '@/app/actions/saveStory';
 
 //import { db } from '@/config/db';
@@ -81,9 +81,11 @@ function CreateStory() {
 
     try {
       //console.log('Final Prompt:', FINAL_PROMPT);
-      const result = await chatSession.sendMessage(FINAL_PROMPT);
-      const story = JSON.parse(result?.response.text());
+      const response = await axios.post("/api/generate-story", {
+  prompt: FINAL_PROMPT,
+});
 
+const story = response.data.story;
       //console.log('Generated story:', story);
 
       // Check story structure and extract title safely
